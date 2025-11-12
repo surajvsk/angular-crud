@@ -4,6 +4,7 @@ import { RegisterComponent } from './register/register';
 import { ForgotPassword } from './forgotpassword/forgotpassword.component';
 import { LoginComponent } from './login/login';
 import { DashboardComponent } from './dashboard/dashboard';
+import { CategoryComponent } from './category/category';
 
 export const routes: Routes = [
   {
@@ -17,5 +18,6 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [authGuard]
   },
+  { path: 'category', component: CategoryComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }  // fallback route
 ];

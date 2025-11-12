@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+
+<div class="category-container">
+  <div class="container">
+    <h2>Category</h2>
+
+    <!-- Form -->
+    <div class="mb-3">
+      <label class="form-label">Category Name</label>
+      <input type="text" class="form-control" placeholder="Category Name" [(ngModel)]="categoryName">
+    </div>
+
+    <button (click)="addCategory()" class="btn btn-primary">
+      Add Category
+    </button>
+
+    <!-- Categories Table -->
+    <div class="card mt-3">
+      <div class="card-body">
+        <p class="card-title">Categories List</p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Category Name</th>
+              <th>Unique ID</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let category of categories; trackBy: trackById">
+              <td>{{ category.id }}</td>
+              <td>{{ category.name }}</td>
+              <td>{{ category.uniqueId }}</td>
+                <td>
+                    <button (click)="editCategory(category)" class="btn btn-warning btn-sm me-2">
+                    Edit
+                    </button>
+
+                    <button (click)="deleteCategory(category.id)" class="btn btn-danger btn-sm">
+                     Delete
+                    </button>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
