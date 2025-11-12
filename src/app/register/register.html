@@ -1,0 +1,24 @@
+<main class="main">
+  <div class="login-container">
+    <h2>Register</h2>
+    <div class="login-form">
+      <div class="input-group">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="name" name="name" required>
+      </div>
+        <div class="input-group">
+        <label>Email</label>
+        <input type="text" [(ngModel)]="email" name="email" required>
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" name="password" required>
+      </div>
+      <button type="submit" (click)="onRegister()"  class="login-btn">Register</button>
+      <div class="footer-links">
+        <a routerLink="/forgot-password">Forgot Password?</a>
+        <a routerLink="/">Login</a>
+      </div>
+    </div>
+  </div>
+</main>

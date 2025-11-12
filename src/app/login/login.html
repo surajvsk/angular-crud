@@ -1,0 +1,27 @@
+<main class="main">
+  <div class="login-container">
+    <h2>Welcome Back</h2>
+    <div class="login-form">
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="text" [(ngModel)]="email" name="email" required>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" name="password" required>
+      </div>
+
+    <button class="login-btn" (click)="onLogin()" [disabled]="loading">
+      {{ loading ? 'Logging in...' : 'Login' }}
+    </button>
+
+      <div class="footer-links">
+        <a routerLink="/forgot-password">Forgot Password?</a>
+        <a routerLink="/register">Create Account</a>
+      </div>
+
+    </div>
+  </div>
+</main>
