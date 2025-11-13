@@ -34,6 +34,7 @@
     "@angular/ssr": "^20.3.9",
     "@ng-bootstrap/ng-bootstrap": "^19.0.1",
     "@popperjs/core": "^2.11.8",
+    "axios": "^1.13.2",
     "bootstrap": "^5.3.8",
     "express": "^5.1.0",
     "ngx-toastr": "^19.1.0",
