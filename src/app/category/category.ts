@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar';
 import axios from 'axios';
 import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-category',
   standalone: true,
@@ -11,6 +12,7 @@ import { environment } from '../../environments/environment';
   templateUrl: './category.html',
   styleUrls: ['./category.css'],
 })
+
 export class CategoryComponent implements OnInit, OnDestroy {
   categoryName = '';
   categories: any[] = [];
@@ -46,7 +48,7 @@ async fetchCategories() {
     this.zone.run(() => {
       this.categories = res.data;
       console.log('Fetched categories:', this.categories);
-      this.cdr.detectChanges(); // ✅ Force Angular to refresh view
+      this.cdr.detectChanges(); //ensure UI updates instantly
     });
   } catch (err) {
     console.error('Failed to fetch categories', err);
@@ -68,7 +70,7 @@ async fetchCategories() {
       this.zone.run(() => {
         this.categoryName = '';
         this.categories.push(res.data);
-        this.cdr.detectChanges(); // ✅ ensure UI updates instantly
+        this.cdr.detectChanges(); // ensure UI updates instantly
       });
     } catch (err) {
       console.error('Failed to add category', err);
