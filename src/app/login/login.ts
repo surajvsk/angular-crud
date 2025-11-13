@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./login.css']
 })
 
-export class LoginComponent {   // ✅ MUST BE LoginComponent
+export class LoginComponent {   // MUST BE LoginComponent
   email: string = '';
   password: string = '';
 
@@ -30,12 +30,12 @@ onLogin() {
           localStorage.setItem('token', res.token);
           this.router.navigate(['/dashboard']);
         } else {
-          alert('Login failed: Token missing ❌');
+          alert('Login failed: Token missing');
         }
       },
       error: (err) => {
         this.loading = false;
-        alert('Login Failed ❌');
+        alert('Login Failed');
         console.error(err);
       }
     });

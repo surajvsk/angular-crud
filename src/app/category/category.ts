@@ -21,6 +21,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
   private token = '';
 
+
+currentPage = 1;
+pageSize = 5;
+searchTerm = '';
+totalPages = 0;
+
+
 ngOnInit() {
   if (isPlatformBrowser(this.platformId)) {
     setTimeout(() => {
@@ -38,22 +45,6 @@ ngOnInit() {
     return { Authorization: `Bearer ${this.token}` };
   }
 
-async fetchCategories() {
-  if (!this.token) return;
-  try {
-    const res = await axios.get(`${environment.apiUrl}/category`, {
-      headers: this.getHeaders(),
-    });
-
-    this.zone.run(() => {
-      this.categories = res.data;
-      console.log('Fetched categories:', this.categories);
-      this.cdr.detectChanges(); //ensure UI updates instantly
-    });
-  } catch (err) {
-    console.error('Failed to fetch categories', err);
-  }
-}
 
   async addCategory() {
     if (!this.categoryName.trim()) {
@@ -108,4 +99,47 @@ async fetchCategories() {
   trackById(index: number, item: any) {
     return item.id;
   }
+
+async fetchCategories() {
+  if (!this.token) return;
+  try {
+    const params = new URLSearchParams({
+      page: this.currentPage.toString(),
+      limit: this.pageSize.toString(),
+      search: this.searchTerm.trim(),
+    });
+
+    const res = await axios.get(`${environment.apiUrl}/category?${params}`, {
+      headers: this.getHeaders(),
+    });
+
+    this.zone.run(() => {
+      this.categories = res.data.data;
+      this.totalPages = res.data.meta?.totalPages || res.data.totalPages || 1;
+      this.cdr.detectChanges();
+    });
+  } catch (err) {
+    console.error('Failed to fetch categories', err);
+  }
+}
+
+changePage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+    this.fetchCategories();
+  }
+}
+
+onSearchChange() {
+  this.currentPage = 1;
+  this.fetchCategories();
+}
+
+
+get paginatedCategories() {
+  const start = (this.currentPage - 1) * this.pageSize;
+  const end = start + this.pageSize;
+  return this.categories.slice(start, end);
+}
+
 }

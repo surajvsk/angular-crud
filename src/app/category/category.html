@@ -4,18 +4,34 @@
   <div class="container">
     <h2>Category</h2>
 
-    <!-- Form -->
+    <!-- Add Category Form -->
     <div class="mb-3">
       <label class="form-label">Category Name</label>
-      <input type="text" class="form-control" placeholder="Category Name" [(ngModel)]="categoryName">
+      <input
+        type="text"
+        class="form-control rounded-0"
+        placeholder="Category Name"
+        [(ngModel)]="categoryName"
+      />
     </div>
 
-    <button (click)="addCategory()" class="btn btn-primary">
+    <button (click)="addCategory()" class="btn btn-primary mb-3 rounded-0">
       Add Category
     </button>
 
+    <!-- Search Bar -->
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control rounded-0"
+        placeholder="Search by name or unique ID..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+      />
+    </div>
+
     <!-- Categories Table -->
-    <div class="card mt-3">
+    <div class="card mt-3 rounded-0">
       <div class="card-body">
         <p class="card-title">Categories List</p>
         <table class="table table-striped">
@@ -27,23 +43,61 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let category of categories; trackBy: trackById">
-              <td>{{ category.id }}</td>
-              <td>{{ category.name }}</td>
-              <td>{{ category.uniqueId }}</td>
-                <td>
-                    <button (click)="editCategory(category)" class="btn btn-warning btn-sm me-2">
-                    Edit
-                    </button>
+      <tbody>
+  <tr *ngFor="let category of categories; trackBy: trackById">
+    <td>{{ category.id }}</td>
+    <td>{{ category.name }}</td>
+    <td>{{ category.uniqueId }}</td>
+    <td>
+      <button
+        (click)="editCategory(category)"
+        class="btn btn-warning btn-sm me-2 rounded-0"
+      >
+        Edit
+      </button>
+      <button
+        (click)="deleteCategory(category.id)"
+        class="btn btn-danger btn-sm rounded-0"
+      >
+        Delete
+      </button>
+    </td>
+  </tr>
 
-                    <button (click)="deleteCategory(category.id)" class="btn btn-danger btn-sm">
-                     Delete
-                    </button>
-                </td>
-            </tr>
-          </tbody>
+  <tr *ngIf="categories.length === 0">
+    <td colspan="4" class="text-center text-muted">
+      No matching categories found.
+    </td>
+  </tr>
+</tbody>
         </table>
+
+        <!-- Pagination Controls -->
+        <nav *ngIf="totalPages > 1" class="mt-3">
+          <ul class="pagination justify-content-center rounded-0">
+            <li class="page-item rounded-0" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="changePage(currentPage - 1)">
+                Previous
+              </button>
+            </li>
+
+            <li
+              class="page-item rounded-0"
+              *ngFor="let page of [].constructor(totalPages); let i = index"
+              [class.active]="currentPage === i + 1"
+            >
+              <button class="page-link rounded-0" (click)="changePage(i + 1)">
+                {{ i + 1 }}
+              </button>
+            </li>
+
+            <li class="page-item rounded-0" [class.disabled]="currentPage === totalPages">
+              <button class="page-link rounded-0" (click)="changePage(currentPage + 1)">
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
